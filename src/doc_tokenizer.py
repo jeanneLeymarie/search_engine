@@ -36,11 +36,11 @@ class DocTokenizer :
         word_list = self.tokenize(path)
         print(word_list)
         
-def test() : 
-    print('\n')
-    x = DocTokenizer()
-    test_file = './Corpus_2018/Automne_GA.txt'
-    x.test_suppPunctuationMark(test_file)
-    x.test_tokenize(test_file)
-    
-test()
+# def test() :
+#     print('\n')
+#     x = DocTokenizer()
+#     test_file = './Corpus_2018/Automne_GA.txt'
+#     x.test_suppPunctuationMark(test_file)
+#     x.test_tokenize(test_file)
+#
+# test()
