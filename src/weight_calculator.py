@@ -1,4 +1,9 @@
-import pprint
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Sep 13 13:44:26 2018
+
+@author: easterly1
+"""
 from collections import OrderedDict
 from math import sqrt
 
@@ -21,5 +26,5 @@ class WeightCalculator:
             denominator *= query_size
             index = numerator / sqrt(denominator)
             unordered_results[index] = doc
-        pprint.pprint(unordered_results)
+
         return OrderedDict(sorted(unordered_results.items(), reverse=True))
