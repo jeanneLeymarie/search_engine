@@ -4,8 +4,8 @@
 """
 import math
 import os
-from pprint import pprint
 from src.doc_tokenizer import DocTokenizer
+
 
 class Indexer:
     """
@@ -27,6 +27,7 @@ class Indexer:
         self._doc_list = os.listdir(self._doc_location)
 
     def index(self):
+        # type: () -> Dict[str, IndexedWord]
         """
         Indexes files from the doc_location and returns a dictionary of words with their frequency
         and the docs that contain the word
@@ -42,9 +43,15 @@ class Indexer:
 
     @property
     def doc_list(self):
+        # type: () -> List[str]
+        """
+        return a list of documents
+        :return: List[str]
+        """
         return self._doc_list
 
     def __create_word_set(self, filename):
+        # type: (str) -> None
         """
         :param filename: str
         :return: None
@@ -53,21 +60,32 @@ class Indexer:
         tmp = self._tokenier.tokenize(path=abs_filename)
         self.__calculate_frequencies(filename, tmp)
 
-    def __calculate_frequencies(self, filename, tmp):
-        while tmp:
-            word = tmp.pop()
+    def __calculate_frequencies(self, filename, tokens):
+        # type: (str, List[str]) -> None
+        """
+        :param filename:
+        :param tokens:
+        :return: None
+        """
+        while tokens:
+            word = tokens.pop()
             if word not in self._word_base:
                 self._word_base[word] = IndexedWord(word, frequency=1, docs={filename: 1})
             else:
                 self._word_base.get(word).augment_doc_frequency(filename)
 
     def __add_index_weights(self):
+        # type: () -> None
+        """
+        :return: None
+        """
         for key, word in self._word_base.items():
             word_frequency = word.frequency
             for doc, word_frequency_in_doc in word.docs.items():
                 word.docs[doc] = self.__calculate_weight(self._nb_files, word_frequency, word_frequency_in_doc)
 
     def __calculate_weight(self, number_of_docs, word_frequency, word_frequency_in_doc):
+        # type: () -> float
         """
         :param number_of_docs: int
         :param word_frequency: int
@@ -80,6 +98,12 @@ class Indexer:
 class IndexedWord:
 
     def __init__(self, word, frequency=1, docs=None):
+        # type: (str, int, Dict[str, float]) -> None
+        """
+        :param word:
+        :param frequency:
+        :param docs:
+        """
         if docs is None:
             docs = {}
 
@@ -88,12 +112,29 @@ class IndexedWord:
         self.docs = docs
 
     def augment_frequency(self):
+        #type: () -> None
+        """
+
+        :return:
+        """
         self.frequency += 1
 
     def add_new_doc(self, doc):
+        # type: (str) -> None
+        """
+
+        :param doc:
+        :return:
+        """
         self.docs[doc] = 1
 
     def augment_doc_frequency(self, doc):
+        # type: (str) -> None
+        """
+
+        :param doc:
+        :return:
+        """
         if doc not in self.docs:
             self.add_new_doc(doc)
             self.augment_frequency()
@@ -106,5 +147,4 @@ class IndexedWord:
     def __str__(self):
         return str({'frequency': self.frequency, 'docs': self.docs})
 
-
-#pprint(Indexer().index())
+# pprint(Indexer().index())
