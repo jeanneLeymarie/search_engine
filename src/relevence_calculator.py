@@ -8,9 +8,17 @@ from collections import OrderedDict
 from math import sqrt
 
 
-class WeightCalculator:
+class RelevenceCalculator:
 
-    def calculate_weights(self, doc_list, word_base, query):
+    def calculate_salton_coefficient(self, doc_list, word_base, query):
+        # type: (str, Dict[str, Dict[str, Union[str, float]]]) -> OrderedDict[float, str]
+        """
+        Calculates the Salton cosine coef
+        :param doc_list:
+        :param word_base:
+        :param query:
+        :return: OrderedDict[float, str]
+        """
         query_size = len(query.split(' '))
         unordered_results = {}
 
