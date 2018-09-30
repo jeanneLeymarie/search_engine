@@ -24,6 +24,7 @@ class Indexer:
         self._word_base = {}
         self._nb_files = 0
         self._tokenier = DocTokenizer()
+        self._doc_list = os.listdir(self._doc_location)
 
     def index(self):
         """
@@ -32,12 +33,16 @@ class Indexer:
         ex. { 'hi' : {'frequency': 1, 'docs': {'hey buddy.txt': 2.302}}
         :return: Dict[str, IndexedWord]
         """
-        for filename in os.listdir(self._doc_location):
+        for filename in self._doc_list:
             self._nb_files += 1
             self.__create_word_set(filename)
         self.__add_index_weights()
 
         return self._word_base
+
+    @property
+    def doc_list(self):
+        return self._doc_list
 
     def __create_word_set(self, filename):
         """
@@ -54,7 +59,7 @@ class Indexer:
             if word not in self._word_base:
                 self._word_base[word] = IndexedWord(word, frequency=1, docs={filename: 1})
             else:
-                self._word_base[word].augment_doc_frequency(filename)
+                self._word_base.get(word).augment_doc_frequency(filename)
 
     def __add_index_weights(self):
         for key, word in self._word_base.items():
@@ -102,4 +107,4 @@ class IndexedWord:
         return str({'frequency': self.frequency, 'docs': self.docs})
 
 
-pprint(Indexer().index())
+#pprint(Indexer().index())
