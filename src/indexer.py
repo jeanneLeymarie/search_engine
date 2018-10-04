@@ -147,4 +147,3 @@ class IndexedWord:
     def __str__(self):
         return str({'frequency': self.frequency, 'docs': self.docs})
 
-# pprint(Indexer().index())

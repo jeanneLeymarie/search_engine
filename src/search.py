@@ -45,10 +45,3 @@ class Search :
         _index = Indexer()
         _orderedDict = RelevenceCalculator.calculate_salton_coefficient(self, _index.doc_list, _index.index(), _queryTest)
         pprint.pprint(_orderedDict.values())
-
-
-if __name__ == '__main__':
-    search = Search()
-    search.list_salton_coef()
-    _result = search.most_relevant_documents()
-    pprint.pprint(_result)

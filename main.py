@@ -1,15 +1,8 @@
 import pprint
-
-from src.indexer import Indexer
-from src.relevence_calculator import RelevenceCalculator
+from src.search import Search
 
 if __name__ == '__main__':
-
-    indexer = Indexer()
-    doc_list = indexer.doc_list
-    word_base = indexer.index()
-
-    query = 'Les vaches souviennent'
-
-    pprint.pprint(RelevenceCalculator().calculate_salton_coefficient(doc_list=doc_list, word_base=word_base, query=query))
-
+    search = Search()
+    search.list_salton_coef()
+    _result = search.most_relevant_documents()
+    pprint.pprint(_result)
