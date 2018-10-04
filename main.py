@@ -1,7 +1,7 @@
 import pprint
 
 from src.indexer import Indexer
-from src.weight_calculator import WeightCalculator
+from src.relevence_calculator import RelevenceCalculator
 
 if __name__ == '__main__':
 
@@ -11,5 +11,5 @@ if __name__ == '__main__':
 
     query = 'Les vaches souviennent'
 
-    pprint.pprint(WeightCalculator().calculate_weights(doc_list=doc_list, word_base=word_base, query=query))
+    pprint.pprint(RelevenceCalculator().calculate_salton_coefficient(doc_list=doc_list, word_base=word_base, query=query))
 
